@@ -739,6 +739,16 @@ extension String {
         }
         return result
     }
+    func repeat(times: Int, _ separator:String? = "") -> String {
+        var result = ""
+        for i in 0..times {
+            result += separator! + self
+        }
+        if separator!.isEmpty == false {
+            return result.substringFromIndex(countElements(separator!))
+        }
+        return result
+    }
 }
 
 extension NSArray {
@@ -788,6 +798,10 @@ extension NSArray {
     return array.implode(separator)!
 }
 //Infix func for Dictionary
+@infix func + <K, V: Equatable>(first: Dictionary<K, V>, second: Dictionary<K, V>) -> Dictionary<K,V>
+{
+    return first.union(second)
+}
 @infix func - <K, V: Equatable> (first: Dictionary<K, V>, second: Dictionary<K, V>) -> Dictionary<K, V> {
     return first.difference(second)
 }

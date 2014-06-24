@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>464DAC1F-F1B5-408A-AE9E-F621021D5DE0</string>
+	<key>IDESourceControlProjectName</key>
+	<string>MVExtensions</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>7E387FDC-45EA-4655-AD4A-F8B64CEB3FA2</key>
+		<string>ssh://github.com/Namvt/MVExtensions.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>MVExtensions.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>7E387FDC-45EA-4655-AD4A-F8B64CEB3FA2</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>ssh://github.com/Namvt/MVExtensions.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>7E387FDC-45EA-4655-AD4A-F8B64CEB3FA2</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>7E387FDC-45EA-4655-AD4A-F8B64CEB3FA2</string>
+			<key>IDESourceControlWCCName</key>
+			<string>MVExtensions</string>
+		</dict>
+	</array>
+</dict>
+</plist>
