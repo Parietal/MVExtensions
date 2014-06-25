@@ -8,6 +8,7 @@
 
 import Foundation
 import Swift
+import UIKit
 
 operator infix =~ {}
 operator infix |~ {}
@@ -771,6 +772,261 @@ extension NSArray {
             }
         }
         return result
+    }
+}
+
+extension UIView {
+    func origin() -> CGPoint {
+        return frame.origin
+    }
+    func setOrigin(origin:CGPoint) {
+        var f = frame
+        f.origin = origin
+        self.frame = f
+    }
+    func size() -> CGSize {
+        return frame.size
+    }
+    func setSize(size:CGSize) {
+        var f = frame
+        f.size = size
+        self.frame = f
+    }
+    func top() -> CFloat {
+        return origin().y
+    }
+    func setTop(y:CFloat) {
+        var f = frame
+        f.origin.y = y
+        self.frame = f
+    }
+    func bottom() -> CFloat {
+        return top() - height()
+    }
+    func setBottom(bottom:CFloat) {
+        var f = frame
+        f.origin.y = bottom - height()
+        self.frame = f
+    }
+    func left() -> CFloat {
+        return origin().x
+    }
+    func setLeft(x:CFloat) {
+        var f = frame
+        f.origin.x = x
+        self.frame = f
+    }
+    func right() -> CFloat {
+        return left() + width()
+    }
+    func setRight(right:CFloat) {
+        var f = frame
+        f.origin.x = right - width()
+        self.frame = f
+    }
+    func width() -> CFloat {
+        return size().width
+    }
+    func setWidth(width:CFloat) {
+        var f = frame
+        f.size.width = width
+        self.frame = f
+    }
+    func height() -> CFloat {
+        return size().height
+    }
+    func setHeight(height:CFloat) {
+        var f = frame
+        f.size.height = height
+        self.frame = f
+    }
+    func centerX() -> CFloat {
+        return center.x
+    }
+    func setCenterX(x:CFloat) {
+        self.center = CGPointMake(x, self.center.y);
+    }
+    func centerY() -> CFloat {
+        return center.y
+    }
+    func setCenterY(y:CFloat) {
+        self.center = CGPointMake(self.center.x, y);
+    }
+    func screenX() -> CFloat {
+        var x:CFloat = 0
+        for var view:UIView = self; view != nil; view = view.superview {
+            x += view.left()
+        }
+        return x
+    }
+    func screenY() -> CFloat {
+        var y:CFloat = 0
+        for var view:UIView = self; view != nil; view = view.superview {
+            y += view.top()
+        }
+        return y
+    }
+    func screenViewX() -> CFloat {
+        var x:CFloat = 0
+        for var view:UIView = self; view != nil; view = view.superview {
+            x += view.left()
+            if view.isKindOfClass(UIScrollView.classForCoder()) {
+                x -= (view as UIScrollView).contentOffset.x
+            }
+        }
+        return x
+    }
+    func screenViewY() -> CFloat {
+        var y:CFloat = 0
+        for var view:UIView = self; view != nil; view = view.superview {
+            y += view.top()
+            if view.isKindOfClass(UIScrollView.classForCoder()) {
+                y -= (view as UIScrollView).contentOffset.y
+            }
+        }
+        return y
+    }
+    func screenFrame() -> CGRect {
+        return CGRectMake(screenViewX(), screenViewY(), width(), height())
+    }
+    func boundsSize() -> CGSize {
+        return bounds.size
+    }
+    func setBoundsSize(size:CGSize) {
+        var bounds = self.bounds
+        bounds.size = size
+        self.bounds = bounds
+    }
+    func boundsWidth() -> CFloat {
+        return boundsSize().width
+    }
+    func setBoundsWidth(width:CFloat) {
+        var bounds = self.bounds
+        bounds.size.width = width
+        self.bounds = bounds
+    }
+    func boundsHeight() -> CFloat {
+        return boundsSize().height
+    }
+    func setBoundsHeight(height:CFloat) {
+        var bounds = self.bounds
+        bounds.size.height = height
+        self.bounds = bounds
+    }
+    func contentBounds() -> CGRect {
+        return CGRectMake(0, 0, boundsWidth(), boundsHeight())
+    }
+    func contentCenter() -> CGPoint {
+        return CGPointMake(boundsWidth()/2.0, boundsHeight()/2.0)
+    }
+    func indentRightBy(offset:CFloat) {
+        setWidth(width() - offset)
+    }
+    func indentLeftBy(offset:CFloat) {
+        setLeft(left() + offset)
+        indentRightBy(offset)
+    }
+    func indentBottomBy(offset:CFloat) {
+        setHeight(height() - offset)
+    }
+    func indentTopBy(offset:CFloat) {
+        setTop(top() + offset)
+        indentBottomBy(offset)
+    }
+    func positionAfter(view:UIView, gap:CFloat) {
+        self.frame = CGRectMake(view.left(), view.top(), view.width(), height())
+        setTop(view.bottom() + gap)
+    }
+    func positionAfter(view:UIView) {
+        positionAfter(view, gap: 0)
+    }
+    func clamp(resizing:UIViewAutoresizing) {
+        self.autoresizingMask = resizing
+    }
+    func clampTop() -> UIViewAutoresizing {
+        clamp(.FlexibleBottomMargin)
+        return self.autoresizingMask
+    }
+    func clampTopBottom() -> UIViewAutoresizing {
+        clamp(.FlexibleHeight)
+        return self.autoresizingMask
+    }
+    func clampBottom() -> UIViewAutoresizing {
+        clamp(.FlexibleTopMargin)
+        return self.autoresizingMask
+    }
+    func clampLeft() -> UIViewAutoresizing {
+        clamp(.FlexibleRightMargin)
+        return self.autoresizingMask
+    }
+    func clampLeftRight() -> UIViewAutoresizing {
+        clamp(.FlexibleWidth)
+        return self.autoresizingMask
+    }
+    func clampRight() -> UIViewAutoresizing {
+        clamp(.FlexibleLeftMargin)
+        return self.autoresizingMask
+    }
+    func clampMiddle() -> UIViewAutoresizing {
+        clamp(.FlexibleLeftMargin | .FlexibleRightMargin | .FlexibleTopMargin | .FlexibleBottomMargin)
+        return self.autoresizingMask
+    }
+    func clampFlexibleMiddle() -> UIViewAutoresizing {
+        clamp(.FlexibleWidth | .FlexibleHeight)
+        return self.autoresizingMask
+    }
+    func clampVerticalMiddle() -> UIViewAutoresizing {
+        clamp(.FlexibleTopMargin | .FlexibleBottomMargin)
+        return self.autoresizingMask
+    }
+    func clampHorizontalMiddle() -> UIViewAutoresizing {
+        clamp(.FlexibleLeftMargin | .FlexibleRightMargin)
+        return self.autoresizingMask
+    }
+    func viewMatchingPredicate(predicate:NSPredicate) -> UIView {
+        if predicate.evaluateWithObject(self) {
+            return self
+        }
+        for view: AnyObject in subviews {
+            let match = view.viewMatchingPredicate(predicate)
+            if match != nil {
+                return match
+            }
+        }
+        return UIView()
+    }
+    func viewWithTag(tag:NSInteger, ofClass:AnyClass) -> UIView {
+        return viewMatchingPredicate(NSPredicate(block: {(view:AnyObject!, dictionary:NSDictionary!) -> Bool in
+            return view.tag == tag && view.isKindOfClass(ofClass)
+        }))
+    }
+    func viewOfClass(viewClass:AnyClass) -> UIView {
+        return viewMatchingPredicate(NSPredicate(block: {(view:AnyObject!, dictionary:NSDictionary!) -> Bool in
+            return view.isKindOfClass(viewClass)
+        }))
+    }
+    func removeAllSubviews() {
+        while subviews.count > 0 {
+            let child = subviews.last() as? UIView
+            child?.removeFromSuperview()
+        }
+    }
+    func offsetFromView(otherView:UIView) -> CGPoint {
+        var x:CFloat = 0, y:CFloat = 0
+        for var view:UIView = self; view != nil && view != otherView; view = view.superview {
+            x += view.left()
+            y += view.top()
+        }
+        return CGPointMake(x, y)
+    }
+    func viewController() -> UIViewController {
+        for var view:UIView = superview; view != nil; view = view.superview {
+            let nextResponder = view.nextResponder()
+            if nextResponder.isKindOfClass(UIViewController.classForCoder()) {
+                return nextResponder as UIViewController;
+            }
+        }
+        return UIViewController()
     }
 }
 
